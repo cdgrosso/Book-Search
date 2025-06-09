@@ -1,67 +1,89 @@
-# Book Search Engine (GraphQL Edition)
+# 📚 Book Search Engine — GraphQL Refactor
 
-This application is a fully functioning book search engine built with the MERN stack. It allows users to search for books using the Google Books API, save favorites, and manage their reading list. This version has been refactored to use GraphQL with Apollo Server.
+A full-stack application that allows users to search for books using the Google Books API and save their favorite titles. This version replaces the RESTful API with a GraphQL/Apollo Server implementation.
 
-## 🚀 Features
+## 🚀 Technologies Used
 
-- Search for books using Google Books API
-- Login/Signup functionality with JWT authentication
-- Save books to your profile
-- View and remove saved books
-- Fully integrated GraphQL API via Apollo Server
-- Frontend React client using Apollo Client
-- Deployed with Render & MongoDB Atlas
+- **Frontend:** React, TypeScript, Apollo Client, Bootstrap
+- **Backend:** Node.js, Express, Apollo Server, GraphQL, MongoDB (via Mongoose)
+- **Authentication:** JWT-based Auth with Apollo context middleware
 
-## 🧠 Technologies Used
+## 📦 Features
 
-- MongoDB & Mongoose
-- Express.js
-- React
-- Node.js
-- Apollo Server & Apollo Client
-- GraphQL
-- JWT for Authentication
+- Search for books from Google Books API
+- Save or delete books from your user profile
+- Secure login and signup
+- Persistent user state with JWT tokens
+- GraphQL queries and mutations instead of REST
 
+## 📁 Folder Structure
 
-## 🔐 Authentication
+```
+client/
+  └── src/
+      ├── pages/
+      │   ├── SearchBooks.tsx
+      │   └── SavedBooks.tsx
+      ├── utils/
+      │   ├── queries.js
+      │   └── mutations.js
+server/
+  └── src/
+      ├── schemas/
+      │   ├── typeDefs.js
+      │   └── resolvers.js
+      └── utils/
+          └── auth.js
+```
 
-This app uses JWT for login/signup, and `auth.ts` middleware has been modified to support GraphQL context.
-
-## 📡 GraphQL
+## 🔑 GraphQL API Overview
 
 ### Queries
-- `me`: returns logged-in user's saved books
+```graphql
+query Me {
+  me {
+    _id
+    username
+    email
+    savedBooks {
+      bookId
+      title
+      authors
+      description
+    }
+  }
+}
+```
 
 ### Mutations
-- `login(email, password)`
-- `addUser(username, email, password)`
-- `saveBook(bookInput)`
-- `removeBook(bookId)`
+```graphql
+mutation login($email: String!, $password: String!) { ... }
+mutation addUser($username: String!, $email: String!, $password: String!) { ... }
+mutation saveBook($input: BookInput!) { ... }
+mutation removeBook($bookId: String!) { ... }
+```
+
+## 🛠️ Getting Started
+
+1. Install server and client dependencies:
+```bash
+npm install     # in both /client and /server directories
+```
+
+2. Add your MongoDB URI and JWT secret to a `.env` file in `/server`.
+
+3. Run the app:
+```bash
+# From project root
+npm run develop
+```
 
 ## 🌐 Deployment
 
-- [Live App on Render](https://your-render-app-url.com)
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [x] Apollo Server with GraphQL endpoint `/graphql`
+- [x] MongoDB Atlas for database
+- [x] Designed for Render deployment
 
-## 🧪 Usage
+---
 
-1. Clone the repo:
-```bash
-git clone https://github.com/your-username/book-search-graphql.git
-cd book-search-graphql
-```
-
-2. Install dependencies:
-```bash
-npm install
-cd client && npm install
-```
-
-3. Run development server:
-```bash
-npm run dev
-```
-
-
-
-© 2025 Book Search Engine | GraphQL Edition
+© 2025 Christopher Del Grosso | Full-Stack Book Search App | GraphQL Edition
